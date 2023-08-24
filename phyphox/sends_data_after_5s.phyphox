@@ -1,0 +1,205 @@
+<phyphox version="1.6" locale="en">
+  <title>Sends data after 5s</title>
+  <category>** Web Interface Test **</category>
+  <icon>5s</icon>
+  <color>8a2be2</color>
+  <description>Sends acceleration measurements after 5 seconds, and stops. The time is also sent. Wait for two seconds before starting. Sends an empty data set at the start (which is ignored). The connection settings should be declared within the phyphox program before it can work ("connection" field, "address" parameter). The experiment can be run several times, or paused (which stops it).
+  
+  The data sent are: accX (data1), accY (data2), accZ (data3), and time (time).
+
+    </description>
+  <link label="Physics ReImagined WebPage">www.vulgarisation.fr</link>
+  
+    <translations>
+		<translation locale="fr">
+			  <title>Envoi de mesures à 5s</title>
+			  <category>** test interface web **</category>
+			  <description>Envoie les mesures de l'accéléromètre au bout de 5 secondes et s'arrête. Le temps est également envoyé. Attend 2 secondes avant de commencer la mesure. Envoie un jeu de données vide au début du programme (qui est ignoré). L'adresse de connexion doit être précisée dans le code du programme phyphox (champ "connection", paramètre "address") avant que le programme ne puisse fonctionner. L'expérience peut être lancée plusieurs fois, ou être mis en pause (ce qui l'arrête).
+
+Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le temps (time).
+
+			  </description>
+			  <string original="Physics ReImagined WebPage">Site de la Physique Autrement</string>
+			  <string original="Press the 'start' icon to launch the experiment. The experiment will wait for 2 seconds before starting, and will then run for 5 seconds. During these 5 seconds, data are going to be acquired (data1, data2, data3). At the end of the experiment, the last values of data and time are sent to the web server.">Appuyez sur l'icone 'start' pour lancer l'expérience. L'experience attendra 2 secondes avant de commencer, et durera ensuite 5 secondes. Pendant ces 5 secondes, les données vont être mesurées (data1, data2, data3). À la fin de l'expérience, les dernières données et le temps seront envoyés sur le serveur web.</string>
+		  </translation>
+	  </translations>
+  
+  
+   <data-containers>
+	<container size="1">data1</container>
+	<container size="1">data2</container>
+	<container size="1">data3</container>
+	<container size="1" init="0">runTime</container>
+	<container size="1" init="0">longTime</container>
+	<container size="1" init="0">elapsedTime</container>
+	<container size="1" init="-1">previousTime</container>
+	<container size="1" init="0">startTime</container>
+	<container size="1">data1Sent</container>
+	<container size="1">data2Sent</container>
+	<container size="1">data3Sent</container>
+	<container size="1" init="1">isRestarted</container>
+    <container size="0">accX</container>
+    <container size="0">accY</container>
+    <container size="0">accZ</container>
+    <container size="0">acc</container>
+    <container size="0">acc_time</container>		
+  </data-containers>
+  
+  <input>
+    <sensor type="accelerometer">
+      <output component="x">accX</output>
+      <output component="y">accY</output>
+      <output component="z">accZ</output>
+    </sensor>
+  </input> 
+  
+  
+<!-- the field "address" in the line below must be completed for the program to run.
+	 Le champ "address" doit être complété afin que le programme puisse fonctionner. -->
+    <network>
+    <connection interval="4.9" address="https://www.MyServer.com/MyFolderWhereTheAppIsInstalled/api/input" id="submit" service="http/post" conversion="none" privacy="https://phyphox.org/disclaimer/" autoConnect="true">
+      <send id="data1" type="buffer">data1Sent</send>
+      <send id="data2" type="buffer">data2Sent</send>
+      <send id="data3" type="buffer">data3Sent</send>
+	  <send	id="time" type="buffer">runTime</send>  
+    </connection>
+  </network>
+ 
+  <views>
+    <view label="Data">
+
+
+	  <separator height="5"/>	
+		  <info label="Press the 'start' icon to launch the experiment. The experiment will wait for 2 seconds before starting, and will then run for 5 seconds. During these 5 seconds, data are going to be acquired (data1, data2, data3). At the end of the experiment, the last values of data and time are sent to the web server." />
+
+<!-- 
+	runTime is the time since the experiment started, or restarted (after being paused or stopped)
+	longTime is the time since the experiment was last started, pause time included (is used to detect a pause action)
+	startTime is the time at which the experiment was started or restarted (after being paused or stopped)
+	elapsedTime is the time since the last analysis cycle: if larger than 0.5 s, it means that the experiment was paused and restarted
+-->
+	  
+	  
+      <value label="time" unit="s">
+        <input>runTime</input>
+      </value>
+	  <separator height="1"/>	  
+      <value label="data1" unit="m/s²">
+        <input>data1Sent</input>
+      </value>
+      <value label="data2" unit="m/s²">
+        <input>data2Sent</input>
+      </value>
+      <value label="data3" unit="m/s²">
+        <input>data3Sent</input>
+      </value>
+	  
+	  <separator height="3"/>
+       <value label="start time" unit="s">
+        <input>startTime</input>
+      </value>
+      <value label="long time" unit="s">
+        <input>longTime</input>
+      </value>
+
+      <value label="elapsed time" unit="s">
+        <input>elapsedTime</input>
+      </value>	  
+    </view>
+    
+  </views>
+  
+<!-- analysis cycle, starts after 2 seconds, and stops after 5-->
+  <analysis sleep="0.1" timedRun="true" timedRunStartDelay="2" timedRunStopDelay="5">
+  
+<!-- ************** Detect if the experiment as been paused or not ************ -->
+
+<!-- isRestarted == 1 means that this is the first analysis cycle after a start or a restart
+	 isRestarted == 0 means the opposite -->
+	 
+  <timer linearTime="true">
+    <output>longTime</output>
+  </timer>
+
+  <subtract cycles="1-">
+    <input clear="false">longTime</input>
+	<input clear="false">previousTime</input>
+	<output>elapsedTime</output>
+  </subtract>
+<!-- elapsedTime is the time since the last analysis cycle : 
+if larger than 0.5 s, it means that the experiment was paused and restarted-->
+  <if greater="true" cycles="1-">
+    <input clear="false">elapsedTime</input>
+    <input type="value">0.5</input>
+	<input type="value">1</input>
+	<input type="value">0</input>
+    <output>isRestarted</output>
+  </if>    
+  
+  <if equal="true" cycles="1-">
+    <input clear="false">isRestarted</input>  
+	<input type="value">1</input>	
+	<input clear="false">longTime</input>
+	<output>startTime</output>
+  </if>
+  
+  <subtract cycles="1-">
+    <input clear="false">longTime</input>
+	<input clear="false">startTime</input>
+	<output>runTime</output>
+  </subtract>
+  
+  <add cycles="1-">
+    <input clear="false">longTime</input>
+	<output >previousTime</output>
+  </add>	
+  
+<!-- ************** data processing ************ -->
+<!-- ************** change this part to fit your goals ************ -->
+
+  <average>
+    <input clear ="true">accX</input>
+	<output as="average">data1</output>
+  </average>
+  <average>
+    <input clear ="true">accY</input>
+	<output as="average">data2</output>
+  </average>
+  <average>
+    <input clear ="true">accZ</input>
+	<output as="average">data3</output>
+  </average>
+  
+
+
+
+<!-- ************** emptying the data for the first analysis cycle (reStart = 1) ************ -->
+<!-- be sure to empty your buffers that are sent to the server, since a first packet will be sent at the end of the first cylcle-->
+  <if equal="true" cycles="1-">
+    <input clear ="false" as="a">isRestarted</input>
+	<input type="value" as="b">1</input>
+	<input type="empty" as="true"></input>
+	<input clear="false" as="false">data1</input>
+	<output>data1Sent</output>
+  </if>
+  
+  <if equal="true" cycles="1-">
+    <input clear ="false" as="a">isRestarted</input>
+	<input type="value" as="b">1</input>
+	<input type="empty" as="true"></input>
+	<input clear="false" as="false">data2</input>
+	<output>data2Sent</output>
+  </if>
+  
+   <if equal="true" cycles="1-">
+    <input clear ="false" as="a">isRestarted</input>
+	<input type="value" as="b">1</input>
+	<input type="empty" as="true"></input>
+	<input clear="false" as="false">data3</input>
+	<output>data3Sent</output>
+  </if>
+  
+ 
+  </analysis>
+
+</phyphox>

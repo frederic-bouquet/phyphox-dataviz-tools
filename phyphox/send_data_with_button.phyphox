@@ -1,0 +1,113 @@
+<phyphox version="1.6" locale="en">
+  <title>Sends data with a button</title>
+  <category>** Web Interface Test **</category>
+  <icon>Btn</icon>
+  <color>8a2be2</color>
+  <description>Sends acceleration measurements when a button is pressed. The time and a user parameter are also sent. The connection settings should be declared within the phyphox program before it can work ("connection" field, "address" parameter).
+  
+  The data sent are: accX (data1), accY (data2), accZ (data3), user parameter (user_parameter) and time (time).
+
+    </description>
+  <link label="Physics ReImagined WebPage">www.vulgarisation.fr</link>
+    <translations>
+		<translation locale="fr">
+			  <title>Envoi de mesures avec un bouton</title>
+			  <category>** test interface web **</category>
+			  <description>Envoie les mesures de l'accéléromètre quand on appuie sur un bouton. Le temps et un paramètre définit par l'utilisateur sont également envoyés. L'adresse de connexion doit être précisée dans le code du programme phyphox (champ "connection", paramètre "address") avant que le programme ne puisse fonctionner. 
+
+Les données envoyées sont : accX (data1), accY (data2), accZ (data3), le paramètre définit par l'utilisateur (user_parameter) et le temps (time).
+
+			  </description>
+			  <string original="Physics ReImagined WebPage">Site de la Physique Autrement</string>
+			  <string original="Press the 'start' icon to launch the experiment. Once the experiment is started, data are going to be acquired (data1, data2, data3). The user can edit the value of user_parameter. When the 'send' button is pressed, the current values of each data, user_parameter and time are sent to the web server.">Appuyez sur l'icone 'start' pour lancer l'expérience. Une fois l'expérience en cours, les données vont être mesurées (data1, data2, data3). Vous pouvez modifier la valeur de user_parameter. Appuyez sur le bouton 'Send' pour envoyer sur le serveur web les valeurs de l'instant des mesures, du temps, et de user_parameter.</string>
+		  </translation>
+	  </translations>
+
+   <data-containers>
+	<container size="1">data1</container>
+	<container size="1">data2</container>
+	<container size="1">data3</container>
+	<container size="1" init="10">userParameter</container>
+	<container size="1" init="0">runTime</container>
+    <container size="0">accX</container>
+    <container size="0">accY</container>
+    <container size="0">accZ</container>
+    <container size="0">acc</container>
+    <container size="0">acc_time</container>	
+  </data-containers>
+  
+   <input>
+    <sensor type="accelerometer">
+      <output component="x">accX</output>
+      <output component="y">accY</output>
+      <output component="z">accZ</output>
+    </sensor>
+  </input> 
+ 
+<!-- the field "address" in the line below must be completed for the program to run.
+	 Le champ "address" doit être complété afin que le programme puisse fonctionner. -->
+    <network>
+    <connection address="https://www.MyServer.com/MyFolderWhereTheAppIsInstalled/api/input" id="submit" service="http/post" conversion="none" privacy="https://phyphox.org/disclaimer/" autoConnect="true">
+      <send id="data1" type="buffer">data1</send>
+      <send id="data2" type="buffer">data2</send>
+      <send id="data3" type="buffer">data3</send>
+      <send id="user_parameter" type="buffer">userParameter</send>
+	  <send	id="time" type="buffer">runTime</send>  
+    </connection>
+  </network>
+ 
+  <views>
+    <view label="Data">
+		  <info label="Press the 'start' icon to launch the experiment. Once the experiment is started, data are going to be acquired (data1, data2, data3). The user can edit the value of user_parameter. When the 'send' button is pressed, the current values of each data, user_parameter and time are sent to the web server." />
+	  <separator height="4"/>
+      <value label="time" unit="s">
+        <input>runTime</input>
+      </value>
+	  <separator height="1"/>	  
+	  <value label="data1" unit="m/s²">
+        <input>data1</input>
+      </value>
+	  <value label="data2" unit="m/s²">
+        <input>data2</input>
+      </value>
+	  <value label="data3" unit="m/s²">
+        <input>data3</input>
+      </value>
+
+
+	  <separator height="2"/>	  
+	  
+	  <edit label="user_parameter">
+	    <output>userParameter</output>
+	  </edit>
+	  
+	  <separator height="2"/>	
+	  <button label="SEND">
+	    <trigger>submit</trigger>
+	  </button>
+    </view>
+    
+  </views>
+  
+  
+  <analysis sleep="0.1" >
+  <timer>
+    <output>runTime</output>
+  </timer>
+  <average>
+    <input clear ="true">accX</input>
+	<output as="average">data1</output>
+  </average>
+  <average>
+    <input clear ="true">accY</input>
+	<output as="average">data2</output>
+  </average>	 
+  <average>
+    <input clear ="true">accZ</input>
+	<output as="average">data3</output>
+  </average>	   
+	 
+	 
+  </analysis>
+
+</phyphox>
