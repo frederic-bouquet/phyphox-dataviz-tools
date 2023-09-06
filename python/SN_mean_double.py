@@ -8,7 +8,7 @@ import json
 # python 2.7 => #!/usr/bin/env python
 # python 3 => '#!/usr/bin/env python3'
 #
-# Use with a single number visualisation
+# 
 #
 # double the input, and calculate the average
 #

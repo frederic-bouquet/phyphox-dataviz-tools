@@ -11,7 +11,7 @@ import json
 # Use with a single number visualisation and the programm accelerometer_demo
 # extravariable : user_parameter
 #
-# calculate the average if user_parameter != 0
+# double the input, and calculate the average if user_parameter != 0
 #
 #
 # configuration :

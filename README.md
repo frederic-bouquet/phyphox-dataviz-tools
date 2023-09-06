@@ -33,11 +33,11 @@ The python scripts are compatible with python 3 and python 2.7, but the first li
 
   
 
-$ python SN_no_change.py input.json output.json
+$ python theNameOfMyPythonScript.py input.json output.json
 
   
 
-The syntax of `input.json` and `output.json` is detailed in the ReadMe of [https://github.com/trberrido/phyphox](https://github.com/trberrido/phyphox). Note that if you have a phyphox experiment sending data to your server, and you need a realistic `input.json` file to develop your python script, using the `no_change` script adapted to you visualization in a dummy run is a good way of obtaining one.
+The syntax of `input.json` and `output.json` is detailed in the ReadMe of [https://github.com/trberrido/phyphox](https://github.com/trberrido/phyphox). If you have a phyphox experiment sending data to your server, and you need a realistic `input.json` file for developing your Python script, using the no_change script adapted to your visualization in a dummy run is a good way to obtain one.
 
   
 
@@ -55,13 +55,13 @@ These scripts are example of how to access data and modify them before visualiza
 
 -  **SN_mean_double_with_test.py**: must be used in a Single Number visualization, and needs the extravariable `user_parameter` defined in the configuration. The phyphox experiment should send data and a buffer with the Id `user_parameter` on each send. If the value of `user_parameter` is zero, the data are ignored, if not the data are doubled and averaged.
 
--  **Hist_no_change.py**: must be used in a Histogram visualization. It plots all data that are received without altering them.
+-  **Hist_no_change.py**: must be used in a Histogram visualization. It plots all data that are received without altering them, which is also the default behavior when no script is used.
 
 -  **Hist_double.py**: must be used in a Histogram visualization. It plots the double of all data that are received.
 
 -  **Hist_double_with_test.py**: must be used in a Histogram visualization, and needs the extravariable `user_parameter` defined in the configuration. The phyphox experiment should send data and a buffer with the Id `user_parameter` on each send. If the value of `user_parameter` is zero, the data are ignored, if not the data are doubled and plotted.
 
--  **XY_no_change.py**: must be used in a Graph visualization. It plots all the (X, Y) data that are received without altering them.
+-  **XY_no_change.py**: must be used in a Graph visualization. It plots all the (X, Y) data that are received without altering them, which is also the default behavior when no script is used.
 
 -  **XY_x2.py**: must be used in a Graph visualization. For all the (X, Y) data that are received, it plots the data point (X², Y).
 
