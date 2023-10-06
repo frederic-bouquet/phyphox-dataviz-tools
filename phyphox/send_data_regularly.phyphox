@@ -5,7 +5,7 @@
   <color>8a2be2</color>
   <description>Sends acceleration measurements regularly, every 5s. The time is also sent. Sends an empty data set at the start (which is ignored). The connection settings should be declared within the phyphox program before it can work ("connection" field, "address" parameter). The experiment can be run several times, or paused but if so a set of data is sent when restarted.
   
-  The data sent are: accX (data1), accY (data2), accZ (data3), and time (time).
+  The data sent are: accX (data1), accY (data2), accZ (data3), user parameter (user_parameter) and time (time).
 
     </description>
   <link label="Physics ReImagined WebPage">www.vulgarisation.fr</link>
@@ -15,7 +15,7 @@
 			  <category>** test interface web **</category>
 			  <description>Envoie les mesures de l'accéléromètre régulièrement (toutes les 5 s). Le temps est également envoyé. Envoie un jeu de données vide au début du programme (qui est ignoré). L'adresse de connexion doit être précisée dans le code du programme phyphox (champ "connection", paramètre "address") avant que le programme ne puisse fonctionner. L'expérience peut être lancée plusieurs fois, ou être mis en pause, mais dans ce cas un jeu de données est envoyé au démarrage. 
 
-Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le temps (time).
+Les données envoyées sont : accX (data1), accY (data2), accZ (data3), le paramètre définit par l'utilisateur (user_parameter) et le temps (time).
 
 			  </description>
 			  <string original="Physics ReImagined WebPage">Site de la Physique Autrement</string>
@@ -28,6 +28,7 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
 	<container size="1" init="10">data1</container>
 	<container size="1" init="10">data2</container>
 	<container size="1" init="10">data3</container>
+	<container size="1" init="10">userParameter</container>
 	<container size="1" init="0">runTime</container>
     <container size="0">accX</container>
     <container size="0">accY</container>
@@ -51,6 +52,7 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
       <send id="data1" type="buffer">data1</send>
       <send id="data2" type="buffer">data2</send>
       <send id="data3" type="buffer">data3</send>
+      <send id="user_parameter" type="buffer">userParameter</send>	  
 	  <send	id="time" type="buffer">runTime</send>  
     </connection>
   </network>
@@ -75,7 +77,11 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
         <input>data3</input>
       </value>
 	  
+	  <separator height="2"/>	  
 	  
+	  <edit label="user_parameter">
+	    <output>userParameter</output>
+	  </edit>	  
     </view>
     
   </views>

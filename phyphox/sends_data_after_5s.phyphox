@@ -5,7 +5,7 @@
   <color>8a2be2</color>
   <description>Sends acceleration measurements after 5 seconds, and stops. The time is also sent. Wait for two seconds before starting. Sends an empty data set at the start (which is ignored). The connection settings should be declared within the phyphox program before it can work ("connection" field, "address" parameter). The experiment can be run several times, or paused (which stops it).
   
-  The data sent are: accX (data1), accY (data2), accZ (data3), and time (time).
+  The data sent are: accX (data1), accY (data2), accZ (data3), user parameter (user_parameter) and time (time).
 
     </description>
   <link label="Physics ReImagined WebPage">www.vulgarisation.fr</link>
@@ -16,7 +16,7 @@
 			  <category>** test interface web **</category>
 			  <description>Envoie les mesures de l'accéléromètre au bout de 5 secondes et s'arrête. Le temps est également envoyé. Attend 2 secondes avant de commencer la mesure. Envoie un jeu de données vide au début du programme (qui est ignoré). L'adresse de connexion doit être précisée dans le code du programme phyphox (champ "connection", paramètre "address") avant que le programme ne puisse fonctionner. L'expérience peut être lancée plusieurs fois, ou être mis en pause (ce qui l'arrête).
 
-Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le temps (time).
+Les données envoyées sont : accX (data1), accY (data2), accZ (data3), le paramètre définit par l'utilisateur (user_parameter) et le temps (time).
 
 			  </description>
 			  <string original="Physics ReImagined WebPage">Site de la Physique Autrement</string>
@@ -29,6 +29,7 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
 	<container size="1">data1</container>
 	<container size="1">data2</container>
 	<container size="1">data3</container>
+	<container size="1" init="10">userParameter</container>	
 	<container size="1" init="0">runTime</container>
 	<container size="1" init="0">longTime</container>
 	<container size="1" init="0">elapsedTime</container>
@@ -61,6 +62,7 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
       <send id="data1" type="buffer">data1Sent</send>
       <send id="data2" type="buffer">data2Sent</send>
       <send id="data3" type="buffer">data3Sent</send>
+      <send id="user_parameter" type="buffer">userParameter</send>	  
 	  <send	id="time" type="buffer">runTime</send>  
     </connection>
   </network>
@@ -105,6 +107,12 @@ Les données envoyées sont : accX (data1), accY (data2), accZ (data3), et le te
       <value label="elapsed time" unit="s">
         <input>elapsedTime</input>
       </value>	  
+	  
+	  <separator height="2"/>	  
+	  
+	  <edit label="user_parameter">
+	    <output>userParameter</output>
+	  </edit>	  
     </view>
     
   </views>
