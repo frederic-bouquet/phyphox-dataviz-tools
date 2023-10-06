@@ -10,8 +10,8 @@ import json
 #
 # Use with a single number visualisation
 #
-# double the input, and calculate the average
-#
+# calculate the average (default behavior when no script is defined)
+# usefull for tests, or for creating a input.json
 #
 # configuration :
 # a single number visualisation

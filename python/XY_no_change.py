@@ -13,6 +13,10 @@ import json
 # makes no change to the x and y values
 # usefull for tests, or for creating a input.json
 #
+#
+# configuration :
+# an XY graph
+#
 
 
 

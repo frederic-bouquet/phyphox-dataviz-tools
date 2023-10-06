@@ -13,6 +13,9 @@ import json
 # makes no change to the values
 # usefull for tests, or for creating a input.json
 #
+# configuration :
+# a histogram
+#
 
 
 

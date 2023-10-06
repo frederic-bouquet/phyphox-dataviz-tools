@@ -12,7 +12,7 @@ import json
 # data points are sent one by one by a phyphox program
 #
 # square the x value but ignore input if user_parameter = 0
-# additionnal cruves are plotted (labeled 'fits', but that is up to you)
+# additionnal curves are plotted (labeled 'fits', but that is up to you)
 #
 #
 # configuration :
