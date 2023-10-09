@@ -51,6 +51,8 @@ These scripts are example of how to access data and modify them before visualiza
 
 -  **SN_no_change.py**: must be used in a Single Number visualization. It calculates the mean, which is also the default behavior when no script is used.
 
+-  **SN_last_data.py**: must be used in a Single Number visualization. It sends the last received data value.
+
 -  **SN_mean_double.py**: must be used in a Single Number visualization. It doubles the data and calculates the mean.
 
 -  **SN_mean_double_with_test.py**: must be used in a Single Number visualization, and needs the extravariable `user_parameter` defined in the configuration. The phyphox experiment should send data and a buffer with the Id `user_parameter` on each send. If the value of `user_parameter` is zero, the data are ignored, if not the data are doubled and averaged.
